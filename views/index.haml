@@ -1,0 +1,72 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "width=device-width, initial-scale=1, shrink-to-fit=no", :name => "viewport"}/
+    %meta{:content => "Michał Zając", :name => "author"}/
+    %title Facebook Events Filter
+    %link{:crossorigin => "anonymous", :href => "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", :integrity => "sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T", :rel => "stylesheet"}/
+    %link{:href => "custom.css", :rel => "stylesheet"}/
+    %script{:src => "https://unpkg.com/stimulus/dist/stimulus.umd.js"}
+    :javascript
+      (() => {
+        const application = Stimulus.Application.start()
+
+        application.register("url", class extends Stimulus.Controller {
+          static get targets() {
+            return [ "source", "going", "maybe", "noResponse", "result" ]
+          }
+
+          generate() {
+             const base64_fb_url = btoa(this.source);
+             const base_url = `${location.protocol}//${window.location.host}${window.location.pathname}${base64_fb_url}`
+             let finalUrl = new URL(base_url);
+             finalUrl.searchParams.append('going', this.going)
+             finalUrl.searchParams.append('maybe', this.maybe)
+             finalUrl.searchParams.append('no_response', this.noResponse)
+             this.resultTarget.value = finalUrl;
+          }
+
+          get source() {
+            return this.sourceTarget.value
+          }
+
+          get going() { return this.goingTarget.checked }
+          set going(value) { this.data.set("going", value) }
+          handleGoing() {
+            this.going = this.goingTarget.checked
+            this.generate()
+          }
+
+          get maybe() { return this.maybeTarget.checked }
+          set maybe(value) { this.data.set("maybe", value) }
+          handleMaybe() {
+            this.maybe = this.maybeTarget.checked
+            this.generate()
+          }
+
+          get noResponse() { return this.noResponseTarget.checked }
+          set noResponse(value) { this.data.set("noResponse", value) }
+          handleNoResponse() {
+            this.noResponse = this.noResponseTarget.checked
+            this.generate()
+          }
+        })
+      })()
+  %body.text-center
+    .form-signin(data-controller="url" data-url-going="true" data-url-maybe="true" data-url-no-response="false")
+      %img.mb-4{:alt => "", :height => "72", :src => "/docs/4.3/assets/brand/bootstrap-solid.svg", :width => "72"}/
+      %p.text-left.h3.mb-3.font-weight-normal Paste your <a href="https://www.facebook.com/help/152652248136178">Facebook events calendar URL</a> below
+      %input#sourceCalendarURL.form-control(data-target="url.source" data-action="url#generate"){:autofocus => "", :placeholder => "Calendar URL", :required => "true"}
+      %p.text-left.h3.my-3.font-weight-normal Select desired events
+      .form-check.text-left
+        %input#going(type="checkbox" data-target="url.going" data-action="url#handleGoing")
+        %label(for="going") Going
+      .form-check.text-left
+        %input#maybe(type="checkbox" data-target="url.maybe" data-action="url#handleMaybe")
+        %label(for="maybe") Maybe
+      .form-check.text-left
+        %input#no_response(type="checkbox" data-target="url.noResponse" data-action="url#handleNoResponse")
+        %label(for="no_response") Not responded to
+      %p.text-left.h3.my-3.font-weight-normal Import the following URL in your Google Calendar
+      %input#targetCalendarURL.form-control(data-target="url.result" readonly)
