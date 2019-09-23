@@ -4,7 +4,7 @@ services:
   app:
     build:
       context: .
-    image: facebook-event-filter:1.0.0
+    image: facebook-event-filter:1.0.1
     tmpfs:
       - /tmp
     ports:
