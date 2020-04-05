@@ -4,7 +4,7 @@ services:
   app:
     build:
       context: .
-    image: quintasan/facebook-event-filter:1.0.2
+    image: quintasan/facebook-event-filter:1.0.3
     tmpfs:
       - /tmp
     ports:
