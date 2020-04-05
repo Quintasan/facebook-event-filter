@@ -1,5 +1,7 @@
 # Facebook Event Filter
 
+![Docker Image Version (latest semver)](https://img.shields.io/docker/v/quintasan/facebook-event-filter?logo=docker&sort=semver&style=for-the-badge)
+
 Facebook [provides a way](https://www.facebook.com/help/152652248136178) to export and sync all your events to a third party calendar application such as Google Calendar, Apple Calendar or Outlook. However, they include events you have not responded to yet. This application allows you to filter events before importing them.
 
 ## Usage
