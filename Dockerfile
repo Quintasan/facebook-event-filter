@@ -1,4 +1,4 @@
-FROM ruby:2.6.4-alpine
+FROM ruby:2.6.5-alpine
 WORKDIR /usr/src/app
 RUN apk --update --no-cache add --virtual build-dependencies ruby-dev build-base
 COPY Gemfile Gemfile.lock ./
