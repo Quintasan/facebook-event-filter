@@ -7,15 +7,13 @@ GEM
       temple (>= 0.8.2)
       thor
       tilt
-    httparty (0.18.0)
-      mime-types (~> 3.0)
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
       multi_xml (>= 0.5.2)
     icalendar (2.6.1)
       ice_cube (~> 0.16)
     ice_cube (0.16.3)
-    mime-types (3.3.1)
-      mime-types-data (~> 3.2015)
-    mime-types-data (3.2019.1009)
+    mini_mime (1.1.2)
     multi_xml (0.6.0)
     mustermann (1.1.2)
       ruby2_keywords (~> 0.0.1)
